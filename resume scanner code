@@ -1,0 +1,26 @@
+#importing the document to text conversion library
+import docx2txt
+
+#Adding the sample document and the document to be analyzed and processing them 
+job_desc=docx2txt.process('/Himanshu resume.docx')
+resume=docx2txt.process('/Resume_HIMANSHU.docx')
+
+#printing the input document
+print(resume)
+
+content=[job_desc,resume]
+
+#extracting the features from the document and converting them to vectors
+from sklearn.feature_extraction.text import CountVectorizer
+cv=CountVectorizer()
+matrix=cv.fit_transform(content)
+
+#finding the similarities in the given documents
+from sklearn.metrics.pairwise import cosine_similarity
+similarity=cosine_similarity(matrix)
+
+#printing the similarity matrix
+print(similarity)
+
+#printing the similarity percentage 
+print('Resume matches by:'+str(similarity[1][0]*100)+'%')
